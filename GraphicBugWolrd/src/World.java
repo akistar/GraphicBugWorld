@@ -25,28 +25,47 @@ public class World extends Group {
 	public void setHeight(int height) {
 		this.height = height;
 	}
+	/**
+	 * To add the entity into the world randomly. Check whether the position will cover the exiting entities. If true, set another position 
+	 * @param e
+	 */
 	public void addEntityRandomly(Entity e) {
-		double x = Math.random()*this.width;
-		double y = Math.random()*this.height;
+		double x = Math.random()*(this.width -2*e.getFitWidth())+e.getFitWidth();
+		double y = Math.random()*(this.height- 2*e.getFitHeight())+e.getFitHeight();
 		e.setLayoutX(x);
 		e.setLayoutY(y);
-		
+
 		while(!checkValid(e)) {
-			System.out.println("same");
-			x = Math.random()*this.width;
-			y = Math.random()*this.height;
+			x = Math.random()*(this.width -2*e.getFitWidth())+e.getFitWidth();
+			y = Math.random()*(this.height- 2*e.getFitHeight())+e.getFitHeight();
 			e.setLayoutX(x);
 			e.setLayoutY(y);
 		}
-		
-		
 		this.entities.add(e);
 		this.getChildren().add(e);
-		
+
 	}
-	
-	
-	
+
+	/**
+	 * another method to add entity. for create baby entity. 
+	 * @param e
+	 */
+	//to do
+	public void addEntity(Entity e) {
+		while(!checkValid(e)) {
+			e.setLayoutX(e.getLayoutX()-1);
+			e.setLayoutY(e.getLayoutY()-1);
+		}
+		this.entities.add(e);
+		this.getChildren().add(e);
+	}
+
+
+	/**
+	 * a method to check whether the position will cover the exiting bugs.
+	 * @param e
+	 * @return
+	 */
 	public boolean checkValid(Entity e) {
 		for(Entity entity: this.entities) {
 			if(entity.getBoundsInParent().intersects(e.getBoundsInParent())) {
@@ -55,43 +74,62 @@ public class World extends Group {
 		}
 		return true;
 	}
-	
+    /**
+     * do action on the bug.
+     */
 	public void tickBug() {
-		for(Entity e: entities) {
-		e.tick(this);
-		if(e.getEnergy()<0) {
-			System.out.println("move energy "+e.getEnergy());
-			this.entities.remove(e);
-		}
-		if(e instanceof Bee) {
-			System.out.println("energy "+e.getEnergy());
-
-		if(e.getLayoutX()<=10)
-			e.setLayoutX(e.getLayoutX()+5);
-		if(e.getLayoutX()>=width -10)
-			e.setLayoutX(e.getLayoutX()-5);
-		if(e.getLayoutY()<=10)
-			e.setLayoutY(e.getLayoutY()+5);
-		if(e.getLayoutY()>=height-10)
-			e.setLayoutY(e.getLayoutY()-5);
-		}
-		else if(e instanceof Caterpillar) {
-			Caterpillar c = (Caterpillar) e;
-			if(e.getLayoutX()<=10)
-				c.setSpeed(-c.getSpeed());
-			if(e.getLayoutX()>=width -10)
-				c.setSpeed(-c.getSpeed());
-			
-		}}
+		for(Entity e: entities) 
+		{
+			e.tick(this);
+			//when an entity's energy is less than 100, it will search food.
+			if(e.getEnergy()<100) {
+				e.setHungry(true);
+			}
+			//if the energy is less than 0, means the entity is dead. And set it visible first. Then remove it from the entities. 
+			if(e.getEnergy()<=0) {
+				e.setVisible(false);
+			}
+			// if a bug meet the edge, change its direction
+			else if(e instanceof Bee || e instanceof Beetle) {
+				if(e.getLayoutX()<=e.getFitWidth())
+					e.setLayoutX(e.getLayoutX()+5);
+				if(e.getLayoutX()>=width -e.getFitWidth())
+					e.setLayoutX(e.getLayoutX()-5);
+				if(e.getLayoutY()<=e.getFitHeight())
+					e.setLayoutY(e.getLayoutY()+5);
+				if(e.getLayoutY()>=height-e.getFitHeight())
+					e.setLayoutY(e.getLayoutY()-5);
+			}else if(e instanceof Caterpillar) {
+				Caterpillar c = (Caterpillar) e;
+				if(e.getLayoutX()<=e.getFitWidth())
+					c.setSpeed(-c.getSpeed());
+				if(e.getLayoutX()>=width -e.getFitWidth())
+					c.setSpeed(-c.getSpeed());
+			}}
 	}
+	
 	public List<Entity> getEntities() {
 		return entities;
 	}
 	public void setEntities(List<Entity> entities) {
 		this.entities = entities;
 	}
-	
-	//public void remove
-	
-	
+
+
+	/**
+	 * when the entity is not visible, which mean it is dead. need to be removed from the world.
+	 */
+	public void removeDead() {
+		int index = this.entities.size();
+		for(int i=0; i<index;) {
+			Entity e = this.entities.get(i);
+			if(e.isVisible()==false) {
+				this.entities.remove(e);
+				this.getChildren().remove(e);
+				index = this.entities.size();
+			}
+			i++;
+		}
+	}
+
 }

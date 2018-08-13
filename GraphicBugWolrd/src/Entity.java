@@ -1,10 +1,11 @@
 import javafx.scene.image.ImageView;
 
 public abstract class Entity extends ImageView{
-public void tick(World world) {
-		
-	}
+public void tick(World world) {}
 public double getEnergy() {return 1;}
+public void setEnergy(double e) {}
+public boolean isHungry() {return false;}
+public void setHungry(boolean isHungry) {}
 
 //for circle
 //public double getLeft() {
