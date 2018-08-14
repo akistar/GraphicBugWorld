@@ -9,8 +9,7 @@ import javafx.scene.image.Image;
  */
 public class Bee extends Bug{
 	
-	private double speed =10;
-	private double eatSpeed = 1;
+	private double eatSpeed = 0.5;
 	
 
 	public Bee(double x, double y, Image i) {
@@ -19,53 +18,32 @@ public class Bee extends Bug{
 		super.setEnergy(energy);
 	}
 	
+	/**
+	 * bee can get energy from all the plants. Plant will not get small when bee is getting energy.
+	 */
 	public void tick(World world) {
-		
-		
 		List<Entity> leftEntities = new ArrayList<Entity>(world.getEntities());
 		leftEntities.remove(this);
 		for(Entity e: leftEntities) {
 			//when a bee is close to a plant and it is hungry, it will eat food.
 			if(e instanceof Plant && this.getBoundsInParent().intersects(e.getBoundsInParent())&& super.isHungry()==true) {
 				this.eat();
-				//when it is energy is more than 150, it will stop eating food.
-				if(super.getEnergy()>150) {
+				//when it is energy is more than 200, it will stop eating food.
+				if(super.getEnergy()>200) {
 					super.setHungry(false);
 				}
 				return;
 			}
 		}
-		double d = Math.random();
-		if(d<0.25) {
-			//north
-			this.setLayoutY(this.getLayoutY()-speed);
-			super.setEnergy(super.getEnergy()-1);
-
-
-		}else if(d<0.5) {
-			//south
-			this.setLayoutY(this.getLayoutY()+speed);
-			super.setEnergy(super.getEnergy()-1);
-
-
-		}else if(d<0.75) {
-			//east
-			this.setLayoutX(this.getLayoutX()-speed);
-			super.setEnergy(super.getEnergy()-1);
-
-
-		}else if(d<1) {
-			//west
-			this.setLayoutX(this.getLayoutX()+speed);
-			super.setEnergy(super.getEnergy()-1);
-
-
-		}
+		//call the tick method to move randomly
+		super.tick(world);
 	}
 	
-
+   /**
+    * when a bee is eating, it can stop and move around the plant
+    */
 	public void eat() {
-		super.setEnergy(super.getEnergy()+1);
+         super.eat();
 		//make it move around the plant
 		this.setLayoutY(this.getLayoutY()-eatSpeed);
 		this.setLayoutX(this.getLayoutX()-eatSpeed);

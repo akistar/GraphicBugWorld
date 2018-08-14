@@ -23,11 +23,6 @@ public class Plant extends Entity{
 			this.setScaleX(this.getScaleX()+0.01);
 		    this.setScaleY(this.getScaleY()+0.01);
 		    }
-		
-//		if(this.getFitWidth()<=30||this.getFitHeight()<=30) {
-//			this.resize(getFitWidth()+1, getFitHeight()+1);
-//		}
-		
 	}
 	
     /**
@@ -37,6 +32,9 @@ public class Plant extends Entity{
 		if(this.getScaleX()>=0||this.getScaleY()>=0) {
 			this.setScaleX(this.getScaleX()-0.01);
 			this.setScaleY(this.getScaleY()-0.01);
+		}
+		if(this.getScaleX() < 0) {
+			this.setVisible(false);
 		}
 	}
 }

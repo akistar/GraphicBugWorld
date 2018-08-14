@@ -1,5 +1,4 @@
 import javafx.animation.KeyFrame;
-
 import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
@@ -26,13 +25,13 @@ import javafx.util.Duration;
 
 public class PaneController extends Application {
 	
-	World world = new World(600, 600);
-	Image beeImage= new Image(getClass().getResourceAsStream("bee.png"));
-	Image daisyImage= new Image(getClass().getResourceAsStream("daisy.png"));
-	Image stoneImage= new Image(getClass().getResourceAsStream("stone.png"));
-	Image caterpillarImage= new Image(getClass().getResourceAsStream("caterpillar.png"));
-	Image beetleImage= new Image(getClass().getResourceAsStream("beetle.png"));
-	Image leafImage= new Image(getClass().getResourceAsStream("leaf.png"));
+	private World world = new World(600, 600);
+	private Image beeImage= new Image(getClass().getResourceAsStream("bee.png"));
+	private Image daisyImage= new Image(getClass().getResourceAsStream("daisy.png"));
+	private Image stoneImage= new Image(getClass().getResourceAsStream("stone.png"));
+	private Image caterpillarImage= new Image(getClass().getResourceAsStream("caterpillar.png"));
+	private Image beetleImage= new Image(getClass().getResourceAsStream("beetle.png"));
+	private Image leafImage= new Image(getClass().getResourceAsStream("leaf.png"));
 	
 	public void addBee(int n) {
         for(int i=0; i<n; i++) {
@@ -81,6 +80,7 @@ public class PaneController extends Application {
 		img.setFitWidth(20);
 		return img;
 	}
+	
 	public StackPane createPane() {
 		VBox vbox = new VBox();
 		Label title = new Label("Create BugWorld");
@@ -146,7 +146,6 @@ public class PaneController extends Application {
 					if(entity.equals("leaf")) {
 						addLeaf(num);
 						nextText.requestFocus();
-
 					}
 					
 	            }

@@ -2,83 +2,51 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.scene.image.Image;
-
+/**
+ * A beetle can move randomly and to one direction at the same time. It can eat Caterpillar.
+ * @author akistar
+ *
+ */
 public class Beetle extends Bug{
-	private double speed =1;
-	public double getSpeed() {
-		return speed;
-	}
-
-
-	public void setSpeed(double speed) {
-		this.speed = speed;
-	}
-
-	private double eatSpeed = 5;
+	
 	public Beetle(double x, double y, Image i) {
 		super(x, y, i);
-		super.setEnergy(100);
+		double energy = Math.random()*200+150; //initial the caterpillar energy between 150 to 200
+		super.setEnergy(energy);
+		double direction = Math.random();
+		if(direction < 0.5) {
+			super.setSpeed(-1);
+		}else {
+			super.setSpeed(1);
+		}
 	}
 	
-	Image beetleImage= new Image(getClass().getResourceAsStream("beetle.png"));
 
-
+   
 	public void tick(World world) {
 		
 		List<Entity> leftEntities = new ArrayList<Entity>(world.getEntities());
 		leftEntities.remove(this);
 		for(Entity e: leftEntities) {
-			if(e instanceof Caterpillar && this.getBoundsInParent().intersects(e.getBoundsInParent())&& super.getEnergy()<20) {
-				System.out.println("Beetle eating bug");
-				super.setEnergy(super.getEnergy()+20);
+			//when a beetle is hungry and happen to meet the caterpillar, it will eat the caterpillar
+			if(e instanceof Caterpillar && this.getBoundsInParent().intersects(e.getBoundsInParent())&& super.getEnergy()<100) {
+				super.setEnergy(super.getEnergy()+50);
 				e.setVisible(false);
 				return;
 			}
+			//when it meet beetle or Obstacle, it will change the move direction.
 			if((e instanceof Beetle||e instanceof Obstacle) && this.getBoundsInParent().intersects(e.getBoundsInParent())) {
-				this.speed = -this.speed;
+				super.setSpeed(-super.getSpeed());
 			}
-
 		}
 		
-		this.setLayoutX(this.getLayoutX()+speed);
-		this.setLayoutY(this.getLayoutY()+speed);
+		//make it move to one direction
+		this.setLayoutX(this.getLayoutX()+super.getSpeed());
+		this.setLayoutY(this.getLayoutY()+super.getSpeed());
 		
-		
-		double d = Math.random();
-		if(d<0.25) {
-			//north
-			this.setLayoutY(this.getLayoutY()-speed);
-			super.setEnergy(super.getEnergy()-1);
-
-
-		}else if(d<0.5) {
-			//south
-			this.setLayoutY(this.getLayoutY()+speed);
-			super.setEnergy(super.getEnergy()-1);
-
-
-		}else if(d<0.75) {
-			//east
-			this.setLayoutX(this.getLayoutX()-speed);
-			super.setEnergy(super.getEnergy()-1);
-
-
-		}else if(d<1) {
-			//west
-			this.setLayoutX(this.getLayoutX()+speed);
-			super.setEnergy(super.getEnergy()-1);
-
-
-		}
-		
-		
+		//call the tick method from the superClass again to make it also move randomly
+		super.tick(world);
+				
 	}
-	
-	
-//	public void eat() {
-//		super.setEnergy(super.getEnergy()+1);
-//		this.setLayoutY(this.getLayoutY()-eatSpeed);
-//		this.setLayoutX(this.getLayoutX()-eatSpeed);
-//		eatSpeed = - eatSpeed;
-//	}
+
 }

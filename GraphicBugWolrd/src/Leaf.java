@@ -14,13 +14,4 @@ public class Leaf extends Plant{
 	 */
 	public void tick(World world) {}
 	
-	/**
-	 * when the leaf's scaleX ==0, mean it is dead. Set it can not be visible.
-	 */
-	public void eaten() {
-		super.eaten();
-		if(this.getScaleX() ==0) {
-			this.setVisible(false);
-		}
-	}
 }

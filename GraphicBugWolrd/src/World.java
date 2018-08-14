@@ -105,19 +105,14 @@ public class World extends Group {
 				if(e.getLayoutX()>=width -e.getFitWidth())
 					e.setSpeed(-e.getSpeed());
 				if(e.getLayoutY()<=e.getFitHeight())
-				{
-					e.setSpeed(-e.getSpeed());
-
-				}
+					e.setSpeed(-e.getSpeed());				
 				if(e.getLayoutY()>=height-e.getFitWidth())
-				{
 					e.setSpeed(-e.getSpeed());
-
-				}
 
 			}}
 	}
 
+	
 	public List<Entity> getEntities() {
 		return entities;
 	}
