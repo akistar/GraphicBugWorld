@@ -4,7 +4,16 @@ import java.util.List;
 import javafx.scene.image.Image;
 
 public class Beetle extends Bug{
-	private double speed =10;
+	private double speed =1;
+	public double getSpeed() {
+		return speed;
+	}
+
+
+	public void setSpeed(double speed) {
+		this.speed = speed;
+	}
+
 	private double eatSpeed = 5;
 	public Beetle(double x, double y, Image i) {
 		super(x, y, i);
@@ -25,15 +34,16 @@ public class Beetle extends Bug{
 				e.setVisible(false);
 				return;
 			}
-//			if(e instanceof Beetle && this.getBoundsInParent().intersects(e.getBoundsInParent()) && super.getEnergy()>10 && e.getEnergy()>10) {
-//				System.out.println("new bettle");
-//				super.setEnergy(super.getEnergy()-10);
-//				e.setEnergy(e.getEnergy()-10);
-//				Beetle newBettle = new Beetle(e.getLayoutX()-30, e.getLayoutY()-30, beetleImage);
-//				world.addEntity(newBettle);
-//				return;
-//			}
+			if((e instanceof Beetle||e instanceof Obstacle) && this.getBoundsInParent().intersects(e.getBoundsInParent())) {
+				this.speed = -this.speed;
+			}
+
 		}
+		
+		this.setLayoutX(this.getLayoutX()+speed);
+		this.setLayoutY(this.getLayoutY()+speed);
+		
+		
 		double d = Math.random();
 		if(d<0.25) {
 			//north
@@ -60,6 +70,8 @@ public class Beetle extends Bug{
 
 
 		}
+		
+		
 	}
 	
 	

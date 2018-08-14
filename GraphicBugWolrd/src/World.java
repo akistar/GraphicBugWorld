@@ -74,9 +74,9 @@ public class World extends Group {
 		}
 		return true;
 	}
-    /**
-     * do action on the bug.
-     */
+	/**
+	 * do action on the bug.
+	 */
 	public void tickBug() {
 		for(Entity e: entities) 
 		{
@@ -90,7 +90,7 @@ public class World extends Group {
 				e.setVisible(false);
 			}
 			// if a bug meet the edge, change its direction
-			else if(e instanceof Bee || e instanceof Beetle) {
+			else if(e instanceof Bee ) {
 				if(e.getLayoutX()<=e.getFitWidth())
 					e.setLayoutX(e.getLayoutX()+5);
 				if(e.getLayoutX()>=width -e.getFitWidth())
@@ -99,15 +99,25 @@ public class World extends Group {
 					e.setLayoutY(e.getLayoutY()+5);
 				if(e.getLayoutY()>=height-e.getFitHeight())
 					e.setLayoutY(e.getLayoutY()-5);
-			}else if(e instanceof Caterpillar) {
-				Caterpillar c = (Caterpillar) e;
+			}else if(e instanceof Caterpillar|| e instanceof Beetle) {
 				if(e.getLayoutX()<=e.getFitWidth())
-					c.setSpeed(-c.getSpeed());
+					e.setSpeed(-e.getSpeed());
 				if(e.getLayoutX()>=width -e.getFitWidth())
-					c.setSpeed(-c.getSpeed());
+					e.setSpeed(-e.getSpeed());
+				if(e.getLayoutY()<=e.getFitHeight())
+				{
+					e.setSpeed(-e.getSpeed());
+
+				}
+				if(e.getLayoutY()>=height-e.getFitWidth())
+				{
+					e.setSpeed(-e.getSpeed());
+
+				}
+
 			}}
 	}
-	
+
 	public List<Entity> getEntities() {
 		return entities;
 	}

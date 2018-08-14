@@ -1,4 +1,3 @@
-
 import javafx.animation.KeyFrame;
 
 import javafx.animation.Timeline;
@@ -16,6 +15,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Background;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -24,7 +24,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-public class UserInterface extends Application{
+public class PaneController extends Application {
 	
 	World world = new World(600, 600);
 	Image beeImage= new Image(getClass().getResourceAsStream("bee.png"));
@@ -33,7 +33,7 @@ public class UserInterface extends Application{
 	Image caterpillarImage= new Image(getClass().getResourceAsStream("caterpillar.png"));
 	Image beetleImage= new Image(getClass().getResourceAsStream("beetle.png"));
 	Image leafImage= new Image(getClass().getResourceAsStream("leaf.png"));
-
+	
 	public void addBee(int n) {
         for(int i=0; i<n; i++) {
 			Bee bee = new Bee(10,10,beeImage);
@@ -75,6 +75,44 @@ public class UserInterface extends Application{
 	        }
 	}
 	
+	public ImageView resizeImage(Image image) {
+		ImageView img = new ImageView(image);
+		img.setFitHeight(20);
+		img.setFitWidth(20);
+		return img;
+	}
+	public StackPane createPane() {
+		VBox vbox = new VBox();
+		Label title = new Label("Create BugWorld");
+		Label bee = new Label("", resizeImage(beeImage));
+		TextField beeNum = new TextField();
+		beeNum.setFocusTraversable(true);
+		Label daisy = new Label("",resizeImage(daisyImage));
+		TextField daisyNum = new TextField();
+		Label stone = new Label("",resizeImage(stoneImage));
+		TextField stoneNum = new TextField();
+		Label caterpillar = new Label("",resizeImage(caterpillarImage));
+		TextField caterpillarNum = new TextField();
+		Label beetle = new Label("",resizeImage(beetleImage));
+		TextField beetleNum = new TextField();
+		Label leaf = new Label("",resizeImage(leafImage));
+		TextField leafNum = new TextField();
+		submitText(beeNum,"bee",daisyNum);
+		submitText(daisyNum,"daisy",stoneNum);
+		submitText(stoneNum,"stone",caterpillarNum);
+		submitText(caterpillarNum,"caterpillar",beetleNum);
+		submitText(beetleNum,"beetle",leafNum);
+		submitText(leafNum,"leaf",beeNum);
+
+		vbox.getChildren().addAll(title, bee, beeNum, daisy, daisyNum,stone,stoneNum,caterpillar, caterpillarNum,beetle, beetleNum,leaf, leafNum);
+		StackPane pane = new StackPane();
+		pane.setPrefWidth(150);
+		pane.setPrefHeight(100);
+		pane.getChildren().add(vbox);
+		pane.setAlignment(Pos.CENTER);
+		vbox.setAlignment(Pos.CENTER);
+		return pane;
+	}
 	public void submitText(TextField text, String entity, TextField nextText) {
 		text.setOnKeyPressed(new EventHandler<KeyEvent>()
 	    {
@@ -115,88 +153,40 @@ public class UserInterface extends Application{
 	        }
 	    });
 	}
-	
-	
-	public StackPane createPane() {
-		VBox vbox = new VBox();
-		Label title = new Label("Create your own bug world");
-		Label bee = new Label("Bee");
-		TextField beeNum = new TextField();
-		beeNum.setFocusTraversable(true);
-		Label daisy = new Label("Daisy");
-		TextField daisyNum = new TextField();
-		Label stone = new Label("Stone");
-		TextField stoneNum = new TextField();
-		Label caterpillar = new Label("Caterpillar");
-		TextField caterpillarNum = new TextField();
-		Label beetle = new Label("Beetle");
-		TextField beetleNum = new TextField();
-		Label leaf = new Label("Leaf");
-		TextField leafNum = new TextField();
-		submitText(beeNum,"bee",daisyNum);
-		submitText(daisyNum,"daisy",stoneNum);
-		submitText(stoneNum,"stone",caterpillarNum);
-		submitText(caterpillarNum,"caterpillar",beetleNum);
-		submitText(beetleNum,"beetle",leafNum);
-		submitText(leafNum,"leaf",beeNum);
-
-		vbox.getChildren().addAll(title, bee, beeNum, daisy, daisyNum,stone,stoneNum,caterpillar, caterpillarNum,beetle, beetleNum,leaf, leafNum);
-		StackPane pane = new StackPane();
-		pane.setPrefWidth(600);
-		pane.setPrefHeight(600);
-		pane.getChildren().add(vbox);
-		pane.setAlignment(Pos.CENTER);
-		vbox.setAlignment(Pos.CENTER);
-		return pane;
-	}
 	@Override
 	public void start(Stage primaryStage) throws Exception {
+		// TODO Auto-generated method stub
 		
-		Pane pane = new Pane();
-		pane.setPrefWidth(600);
-		pane.setPrefHeight(600);
-
+		Pane bugWorld = new Pane();// to present the world
+		bugWorld.setPrefWidth(600);
+		bugWorld.setPrefHeight(600);
+		bugWorld.setStyle("-fx-background-color: forestGreen;");
+		bugWorld.getChildren().add(world);//add world into the bugWorld
 		
-
-	    pane.setStyle("-fx-background-color: forestGreen;");
-
-		pane.getChildren().add(world);
-		
-		
-
-
-
 		Button playButton = new Button("Play");
-		playButton.setLayoutX(100);
-
+  
 		Button stopButton = new Button("Stop");
-	
+		
 		HBox buttons = new HBox();
-		buttons.getChildren().addAll(playButton,stopButton);
+		buttons.getChildren().addAll(playButton, stopButton);
+	    buttons.setSpacing(20);
+	    buttons.setAlignment(Pos.CENTER);
+		VBox controller = new VBox();
+		controller.setSpacing(300);
+		StackPane createPane = createPane();
+		controller.getChildren().addAll(createPane,buttons);// add createPane, stop button, play button
 		
-
-		VBox root = new VBox();
-		root.getChildren().addAll(pane, buttons);
-		Scene scene = new Scene(root);
-		
-		Button createButton = new Button("Create");
-		
-		createButton.setOnAction((ActionEvent event) ->{
-			primaryStage.setScene(scene);
-		});
-		
-		VBox createRoot = new VBox();
-        
-        Pane createPane = this.createPane();
-		
-        createRoot.getChildren().addAll(createPane, createButton);
-		
-        Scene createScene = new Scene(createRoot);
-        primaryStage.setScene(createScene);
+		HBox root = new HBox();
+	    root.getChildren().addAll(controller,bugWorld);//add buttons and pane into root
+	    
+	    Scene scene = new Scene(root);
+	    primaryStage.setScene(scene);
 		primaryStage.setTitle("Bug world");
 		primaryStage.show();
-	
-
+		
+		
+		
+		//Animation section
 		KeyFrame frame = new KeyFrame(Duration.millis(150), new EventHandler<ActionEvent>() {
 			@Override
 			public void handle(ActionEvent arg0) {
@@ -204,48 +194,23 @@ public class UserInterface extends Application{
 				world.removeDead();//
 			}
 		});
-
-	
-
+		
 		Timeline timeline = new Timeline(frame);
 
 		timeline.setCycleCount(javafx.animation.Animation.INDEFINITE);
-        
-		KeyFrame frame1 = new KeyFrame(Duration.millis(2000), new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent arg0) {
-				addBee(1);
-				addCaterpillar(2);
-				addBeetle(1);
-				addLeaf(2);
-				addDaisy(2);
-			}
-		});
 
-	
-
-		Timeline timeline2 = new Timeline(frame1);
-
-		timeline2.setCycleCount(javafx.animation.Animation.INDEFINITE);
-        
-		
 		playButton.setOnAction((ActionEvent event)->{
-			timeline2.play();
 			timeline.play();
 
 		});
 		stopButton.setOnAction((ActionEvent event)->{
 			timeline.stop();
-			timeline2.stop();
-
 		});
+		
 	}
-
-
 
 	public static void main(String[] args) {
 		Application.launch(args);
 
 	}
-
 }

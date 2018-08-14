@@ -9,12 +9,18 @@ import javafx.scene.image.Image;
  */
 public class Caterpillar extends Bug{
 	
-	private double speed =1;
+	private double speed;
 
 	public Caterpillar(double x, double y, Image i) {
 		super(x, y, i);
 		double energy = Math.random()*200+100; //initial the caterpillar energy between 100 to 200
 		super.setEnergy(energy);
+		double direction = Math.random();
+		if(direction < 0.5) {
+			speed = -1;
+		}else {
+			speed = 1;
+		}
 	}
 
 	/**

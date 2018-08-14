@@ -1,10 +1,10 @@
 import javafx.scene.image.Image;
 
 public class Plant extends Entity{
-	private int size = 20; 
 	
 	
 	public Plant(double x, double y, Image i){
+		double size = Math.random()*10+15;
 		//display its position in the scene
 		this.setLayoutX(x);
 		this.setLayoutY(y);
@@ -23,6 +23,11 @@ public class Plant extends Entity{
 			this.setScaleX(this.getScaleX()+0.01);
 		    this.setScaleY(this.getScaleY()+0.01);
 		    }
+		
+//		if(this.getFitWidth()<=30||this.getFitHeight()<=30) {
+//			this.resize(getFitWidth()+1, getFitHeight()+1);
+//		}
+		
 	}
 	
     /**
