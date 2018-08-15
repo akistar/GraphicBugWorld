@@ -4,7 +4,7 @@ import java.util.List;
 import javafx.scene.image.Image;
 /**
  * A beetle can move randomly and to one direction at the same time. It can eat Caterpillar.
- * @author akistar
+ * @author Dantong Huang
  *
  */
 public class Beetle extends Bug{
@@ -30,7 +30,7 @@ public class Beetle extends Bug{
 		for(Entity e: leftEntities) {
 			//when a beetle is hungry and happen to meet the caterpillar, it will eat the caterpillar
 			if(e instanceof Caterpillar && this.getBoundsInParent().intersects(e.getBoundsInParent())&& super.getEnergy()<100) {
-				super.setEnergy(super.getEnergy()+50);
+				super.setEnergy(super.getEnergy()+100);
 				e.setVisible(false);
 				return;
 			}

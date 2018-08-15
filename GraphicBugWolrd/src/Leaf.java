@@ -1,7 +1,7 @@
 import javafx.scene.image.Image;
 /**
  * leaf cannot grow. It can eaten by caterpillar.
- * @author akistar
+ * @author Dantong
  *
  */
 public class Leaf extends Plant{

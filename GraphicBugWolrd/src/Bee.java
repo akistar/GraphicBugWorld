@@ -4,7 +4,7 @@ import java.util.List;
 import javafx.scene.image.Image;
 /**
  * Bee can move randomly. When it move, it will lost its energy. When it is hungry, it will eat honey from the plant, it can get energy back.
- * @author akistar
+ * @author Dantong Huang
  *
  */
 public class Bee extends Bug{

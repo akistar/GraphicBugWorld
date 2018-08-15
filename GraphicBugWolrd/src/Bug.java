@@ -1,5 +1,9 @@
 import javafx.scene.image.Image;
-
+/**
+ * Bug can move and eat.
+ * @author Dantong Huang
+ *
+ */
 public class Bug extends Entity{
 	private double speed =10;
 	private double energy = 150;
@@ -29,7 +33,8 @@ public class Bug extends Entity{
 			//west
 			this.setLayoutX(this.getLayoutX()+speed);
 		}
-		this.energy--;
+		this.energy = this.energy-0.5;
+	
 	}
 	
     

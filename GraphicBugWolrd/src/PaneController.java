@@ -22,7 +22,13 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-
+/**
+ * This is the user interface of the project. It will create a stage for the bug world, which has two parts. 
+ * The left part is to control the bug world. It can add specific number entities into the bug world. It has play, stop and clear buttons.
+ * The right part is to show the bug
+ * @author Dantong Huang
+ *
+ */
 public class PaneController extends Application {
 	
 	private World world = new World(600, 600);
@@ -163,11 +169,11 @@ public class PaneController extends Application {
 		bugWorld.getChildren().add(world);//add world into the bugWorld
 		
 		Button playButton = new Button("Play");
-  
 		Button stopButton = new Button("Stop");
-		
+		Button clearButton = new Button("Clear");
+
 		HBox buttons = new HBox();
-		buttons.getChildren().addAll(playButton, stopButton);
+		buttons.getChildren().addAll(playButton, stopButton, clearButton);
 	    buttons.setSpacing(20);
 	    buttons.setAlignment(Pos.CENTER);
 		VBox controller = new VBox();
@@ -206,6 +212,9 @@ public class PaneController extends Application {
 			timeline.stop();
 		});
 		
+		clearButton.setOnAction((ActionEvent event) ->{
+			world.clearEntities();
+		});
 	}
 
 	public static void main(String[] args) {

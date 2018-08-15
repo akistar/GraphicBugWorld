@@ -2,7 +2,7 @@ import javafx.scene.image.ImageView;
 
 /**
  * The superClass of all the object in the bug world.
- * @author akistar
+ * @author Dantong Huang
  *
  */
 public abstract class Entity extends ImageView{

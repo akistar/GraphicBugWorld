@@ -2,7 +2,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javafx.scene.Group;
-
+/**
+ * World has a list to store all the entities. 
+ * @author Dantong Huang
+ *
+ */
 public class World extends Group {
 	private int width;
 	private int height;
@@ -134,6 +138,12 @@ public class World extends Group {
 				index = this.entities.size();
 			}
 			i++;
+		}
+	}
+	
+	public void clearEntities() {
+		for(int i=0; i<this.entities.size();i++) {
+			this.entities.get(i).setVisible(false);
 		}
 	}
 

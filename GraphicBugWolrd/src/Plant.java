@@ -1,5 +1,8 @@
 import javafx.scene.image.Image;
-
+/**
+ * Plant can grow and get smaller when it is eaten.
+ * @author Dantong Huang
+ */
 public class Plant extends Entity{
 	
 	
@@ -29,11 +32,11 @@ public class Plant extends Entity{
      * when a plant is eaten, it will become smaller and smaller.
      */
 	public void eaten() {
-		if(this.getScaleX()>=0||this.getScaleY()>=0) {
+		if(this.getScaleX()>0||this.getScaleY()>0) {
 			this.setScaleX(this.getScaleX()-0.01);
 			this.setScaleY(this.getScaleY()-0.01);
 		}
-		if(this.getScaleX() < 0) {
+		if(this.getScaleX() <= 0) {
 			this.setVisible(false);
 		}
 	}
